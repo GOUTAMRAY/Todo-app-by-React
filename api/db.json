@@ -1,0 +1,34 @@
+{
+  "todos": [
+    {
+      "title": "Go to school",
+      "type": "Completed",
+      "id": 1
+    },
+    {
+      "title": "Project planing",
+      "type": "Pending",
+      "id": 2
+    },
+    {
+      "title": "Basic setup all done",
+      "type": "Pending",
+      "id": 3
+    },
+    {
+      "title": "Eating at 12 pm",
+      "type": "Deleted",
+      "id": 4
+    },
+    {
+      "title": "Go to market at 7 pm",
+      "type": "Pending",
+      "id": 5
+    },
+    {
+      "title": "Class completed",
+      "type": "Completed",
+      "id": 6
+    }
+  ]
+}
