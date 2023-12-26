@@ -11,24 +11,14 @@
       "id": 2
     },
     {
-      "title": "Basic setup all done",
-      "type": "Pending",
-      "id": 3
-    },
-    {
       "title": "Eating at 12 pm",
       "type": "Deleted",
       "id": 4
     },
     {
-      "title": "Go to market at 7 pm",
-      "type": "Pending",
-      "id": 5
-    },
-    {
-      "title": "Class completed",
+      "title": "Social and Relationships",
       "type": "Completed",
-      "id": 6
+      "id": 5
     }
   ]
 }

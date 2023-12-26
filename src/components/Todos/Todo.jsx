@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import { todosTypesCheck } from "../../helpers/helpers";
 import axios from "axios";
-
+import Swal from "sweetalert2";
+import { FaTrashAlt } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 
 const Todo = () => {
@@ -29,17 +31,42 @@ const Todo = () => {
 
     // add todo 
     const handleTodoAdd = async() => {
-      await axios.post("http://localhost:5000/todos", input)
-      getAllTodos();
-      setInput({
-         title: "",
-         type : "Pending"
-      })
+      if (!input.title || !input.type) {
+        toast("All Fields Are Required!")
+      }else{
+        await axios.post("http://localhost:5000/todos", input)
+        getAllTodos();
+        toast("Todo Created Successfull")
+      }
+
     }
+
     // delete todo 
     const handleTodoDelete = async (id) => {
-       await axios.delete(`http://localhost:5000/todos/${id}`)
-       getAllTodos();
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+         axios.delete(`http://localhost:5000/todos/${id}`)
+
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+        }
+        getAllTodos();
+      });
+
+       
+     
     }
 
     useEffect(() => {
@@ -51,11 +78,11 @@ const Todo = () => {
       <Container className="my-5">
         <Row className="justify-content-center">
           <Col md={5}> 
+          <h2 className="text-center mt-5 text-primary " style={{fontSize: "28px"}}> Add Your Todo </h2>
           <Card > 
-          <h2 className="text-center"> Add Your Todo</h2>
           <div className="todo-app d-flex p-3">          
              <div className="my-3">
-                <input type="text" className="form-control" placeholder="Todo Name" name="title" value={input.title} onChange={handleInputChange}/>
+                <input type="text" className="form-control" placeholder="Insert a todo" name="title" value={input.title} onChange={handleInputChange}/>
              </div> &nbsp;
              <div className="my-3"  style={{width: "250px"}}>              
                 <select className="form-control" name="type" value={input.type} onChange={handleInputChange} >
@@ -78,7 +105,7 @@ const Todo = () => {
                     <ul className="list-group ">
                       { todo?.length > 0 ? todo.map((item, index) => {
                         return <li className="list-group-item d-flex justify-content-between mb-2" key={index} style={{backgroundColor: todosTypesCheck(item.type)}}>
-                        <span style={{fontSize: "25px", }}> {item.title}  </span> <button className="btn btn-sm btn-danger" onClick={() => handleTodoDelete(item.id)}> X </button>
+                        <span style={{fontSize: "25px", }}> {item.title}  </span> <button className="btn btn-sm btn-danger" onClick={() => handleTodoDelete(item.id)}> <FaTrashAlt /> </button>
                       </li>
                       }) :  
                        (<li className="list-group-item">
